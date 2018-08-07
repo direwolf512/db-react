@@ -27,9 +27,19 @@ module.exports = {
   },
 
   devServer: {
-    port: 9000,
+    port: 9600,
     contentBase: path.join(__dirname, './dist'),
     historyApiFallback: true,
     host: '0.0.0.0'
+  },
+
+  resolve: {
+    alias: {
+      pages: path.join(__dirname, 'src/pages'),
+      component: path.join(__dirname, 'src/component'),
+      router: path.join(__dirname, 'src/router'),
+      actions: path.join(__dirname, 'src/redux/actions'),
+      reducers: path.join(__dirname, 'src/redux/reducers')
+    }
   }
 };

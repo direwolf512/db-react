@@ -22,7 +22,7 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        this is home2~<br/>
+        this is home1~<br/>
         当前计数：{this.state.count}<br/>
         <button onClick={() => this._handleClick()}>自增</button>
       </div>
