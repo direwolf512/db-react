@@ -2,36 +2,47 @@
  * @fileOverview
  * @author ISS
  */
+
 const path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-
-  /*入口*/
-  entry: [
-    'react-hot-loader/patch',
-    path.join(__dirname, 'src/index.js')
-  ],
-
-  /*输出到dist文件夹，输出文件名字为bundle.js*/
+  devtool: 'cheap-module-source-map',
+  entry: {
+    app: [
+      path.join(__dirname, 'src/index.js')
+    ],
+    vendor: ['react', 'react-router-dom', 'redux', 'react-dom', 'react-redux']
+  },
   output: {
     path: path.join(__dirname, './dist'),
-    filename: 'bundle.js'
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].js'
   },
-
   module: {
     rules: [{
       test: /\.js$/,
-      use: ['babel-loader?cacheDirectory=true'],
+      use: ['babel-loader'],
       include: path.join(__dirname, 'src')
+    }, {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader']
+    }, {
+      test: /\.(png|jpg|gif)$/,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 8192
+        }
+      }]
     }]
   },
-
-  devServer: {
-    port: 9000,
-    contentBase: path.join(__dirname, './dist'),
-    historyApiFallback: true,
-    host: '0.0.0.0'
-  },
+  plugins: [
+    new webpack.HashedModuleIdsPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'runtime'
+    })
+  ],
 
   resolve: {
     alias: {
